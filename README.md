@@ -73,6 +73,33 @@ To calculate metrics such as time between order creation and approval or average
 | **fact_customer_review**    | **No**                    | Customer reviews are typically not updated after submission. In the rare case of updates, overwriting the review with the latest data is sufficient. |
 | **fact_delivery_performance**| **Yes**                   | Delivery performance metrics (e.g., estimated delivery vs. actual delivery) may change over time due to delays. Keeping a history of changes to delivery estimates is essential for performance analysis. |
 
+Since we implemented the SCD type 2 to the data warehouse, there is some addition on our table schema, these columns are:
+- valid_from: A DATE or TIMESTAMP column that records the date when the record became valid.
+- valid_to: A DATE or TIMESTAMP column that indicates when the record was superseded (or NULL if it is the current version).
+- is_current: A BOOLEAN flag to mark the latest version of the record (optional, but useful for querying the current state quickly).
+- 
+With SCD Type 2, every time a change occurs (e.g., a customer moves to a new location), a new record will be inserted into the dimension table, representing the updated information. The old record will remain in the table, but the valid_to date will be set to indicate the time it became inactive, and the is_current flag (if implemented) will be set to FALSE for this outdated record. The fact tables (e.g., fact_order_processing, fact_delivery_performance) will not need to change in terms of structure. They will continue to reference the dimension tables as foreign keys. However, because SCD Type 2 involves inserting new rows into the dimension tables, fact tables will implicitly reference the correct version of a dimension record based on the foreign key relationship and the time when the fact occurred.
+Here is the table that provides information about which tables were changed due to the implementation of SCD Type 2 and details the changes made to each table:
+# SCD Type 2 Changes Table
+
+| **Table Name**             | **Changes Due to SCD Type 2**                                                                                               |
+|----------------------------|----------------------------------------------------------------------------------------------------------------------------|
+| **dim_product**             | No changes. SCD Type 1 is implemented (no need for historical tracking).                                                    |
+| **dim_customer**            | Added columns: `valid_from`, `valid_to`, `is_current` to track historical changes (SCD Type 2).                             |
+| **dim_seller**              | Added columns: `valid_from`, `valid_to`, `is_current` to track historical changes (SCD Type 2).                             |
+| **dim_geolocation**         | No changes. SCD Type 1 is implemented (no need for historical tracking).                                                    |
+| **dim_payment_type**        | No changes. SCD Type 1 is implemented (no need for historical tracking).                                                    |
+| **dim_order**               | Added columns: `valid_from`, `valid_to`, `is_current` to track historical changes (SCD Type 2).                             |
+| **dim_review**              | No changes. SCD Type 1 is implemented (no need for historical tracking).                                                    |
+| **fact_order_processing**   | No changes. This is a fact table and references SCD Type 2 dimensions where applicable.                                      |
+| **fact_payment_processing** | No changes. This is a fact table and references SCD Type 2 dimensions where applicable.                                      |
+| **fact_customer_review**    | No changes. This is a fact table and references SCD Type 2 dimensions where applicable.                                      |
+| **fact_delivery_performance**| No changes. This is a fact table and references SCD Type 2 dimensions where applicable.                                      |
+
+
+
+
+
    
    
 
