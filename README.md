@@ -97,7 +97,12 @@ Here is the table that provides information about which tables were changed due 
 | **fact_delivery_performance**| No changes. This is a fact table and references SCD Type 2 dimensions where applicable.                                      |
 
 
+# **BUILD ELT PIPELINE USING LUIGI**
 
+We have design the concept of datawarehouse,now the next step is to implemented the design and build the ELT pipeline. In this project we will use LUIGI to orchestrate
+automatic data pipeline.
+
+![ELT SCHEMA](https://github.com/user-attachments/assets/53c1e259-8908-4df9-96fe-fc9acefee610)
 
 
    
