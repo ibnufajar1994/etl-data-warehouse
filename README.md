@@ -104,6 +104,29 @@ automatic data pipeline, the schema of ELT process is shown bellow:
 
 ![ELT SCHEMA](https://github.com/user-attachments/assets/53c1e259-8908-4df9-96fe-fc9acefee610)
 
+on this project, we will implement ELT to manage:
+- Scheduling
+- Logging
+- Manage Pipeline Summary
+- Alerting & Notifications
+
+# **1. REQUIREMENTS**
+- OS:
+  - LINUX
+  - WSLWSL (Windows Subsystem For Linux)
+- Tools :
+  - Dbeaver
+  - Docker
+  - Cron
+- Programming Language :
+  - Python
+  - SQL
+- Python Libray :
+  - Luigi
+  - Pandas
+  - Sentry-SDK
+- Platforms :
+  - Sentry
 
    
 
