@@ -100,12 +100,11 @@ Here is the table that provides information about which tables were changed due 
 # **BUILD ELT PIPELINE USING LUIGI**
 
 We have design the concept of datawarehouse,now the next step is to implemented the design and build the ELT pipeline. In this project we will use LUIGI to orchestrate
-automatic data pipeline.
+automatic data pipeline, the schema of ELT process is shown bellow:
 
 ![ELT SCHEMA](https://github.com/user-attachments/assets/53c1e259-8908-4df9-96fe-fc9acefee610)
 
 
-   
    
 
     
